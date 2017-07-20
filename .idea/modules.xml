@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/comutilslibary/comutilslibary.iml" filepath="$PROJECT_DIR$/comutilslibary/comutilslibary.iml" />
       <module fileurl="file://$PROJECT_DIR$/magpieHotel.iml" filepath="$PROJECT_DIR$/magpieHotel.iml" />
     </modules>
   </component>

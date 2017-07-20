@@ -4,14 +4,85 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.innouni.magpie.main.MainActivity">
+    tools:context="com.innouni.magpie.main.mainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+
+
+    <FrameLayout   android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/iv_line"  >
+    </FrameLayout>
+
+
+
+
+    <ImageView
+        android:id="@+id/iv_line"
+        android:layout_above="@+id/ll_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="0.03dp"
+        android:background="@color/cr_black"/>
+
+    <LinearLayout
+        android:id="@+id/ll_bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:orientation="horizontal"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
+        <TextView
+            android:id="@+id/tv_home"
+            android:layout_weight="1.0"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="首页"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:textColor="@color/cr_black"
+            android:drawablePadding="4dp"
+            android:drawableTop="@mipmap/ic_launcher"
+            />
+
+        <TextView
+            android:id="@+id/tv_find"
+            android:layout_weight="1.0"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="发现"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:textColor="@color/cr_black"
+            android:drawablePadding="4dp"
+            android:drawableTop="@mipmap/ic_launcher"/>
+
+
+        <TextView
+            android:id="@+id/tv_chat"
+            android:layout_weight="1.0"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="客服"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:textColor="@color/cr_black"
+            android:drawablePadding="4dp"
+            android:drawableTop="@mipmap/ic_launcher"/>
+
+
+        <TextView
+            android:id="@+id/tv_personal"
+            android:layout_weight="1.0"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="我的"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:textColor="@color/cr_black"
+            android:drawablePadding="4dp"
+            android:drawableTop="@mipmap/ic_launcher"/>
+
+
+    </LinearLayout>
 </RelativeLayout>
