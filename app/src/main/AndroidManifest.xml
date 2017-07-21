@@ -9,13 +9,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:name=".magpieApplication">
-        <activity android:name=".mainActivity">
+        <activity android:name=".weclomeActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/iLauncherTheme"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".mainActivity"
+            android:screenOrientation="portrait"
+            ></activity>
+
+        <activity android:name=".ui.activity.user.loginActivity"
+            android:screenOrientation="portrait"
+            ></activity>
     </application>
 
 </manifest>
