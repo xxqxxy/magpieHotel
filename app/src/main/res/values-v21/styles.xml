@@ -4,6 +4,7 @@
     <style name="TranslucentTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">false</item>
+        <item name="android:statusBarColor">@color/translate</item>
     </style>
 
 </resources>

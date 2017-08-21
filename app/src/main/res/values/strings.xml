@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">喜鹊小租</string>
+    <string name="tv_home" >首页</string>
+    <string name="tv_chat" >客服</string>
+    <string name="tv_personal" >我的</string>
+
 </resources>

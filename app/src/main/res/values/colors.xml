@@ -5,7 +5,24 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="cr_white" >#FFFFFF</color>
-    <color name="cr_black" >#555555</color>
+    <color name="cr_black_1" >#333333</color>
+    <color name="cr_black_2" >#555555</color>
+    <color name="cr_green_1" >#2BB7AA</color>
+    <color name="cr_green_2">#25A397</color>
 
+    <color name="cr_green_5" >#2BB7AA</color>
+    <color name="cr_green_3" >#bf2BB7AA</color>
+    <color name="cr_green_4" >#bf2BB7AA</color>
+
+
+
+
+    <color name="white">#fefefe</color>
+    <color name="black_dft">#3c3c3c</color>
+    <color name="translate">#00000000</color>
+    <color name="bg_main">#f0eff4</color>
+    <color name="gray_dft">#888888</color>
+    <color name="dividing_light">#f0f0f0</color>
+    <color name="dividing_dark">#c9c9c9</color>
 
 </resources>

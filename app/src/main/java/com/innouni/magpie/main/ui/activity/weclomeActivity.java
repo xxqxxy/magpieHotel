@@ -1,4 +1,4 @@
-package com.innouni.magpie.main;
+package com.innouni.magpie.main.ui.activity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.Message;
 
 import com.comutils.main.utils.SharePreferences;
+import com.innouni.magpie.main.R;
 
 /**
  * 欢迎页 weclome
@@ -57,9 +58,7 @@ public class weclomeActivity extends Activity {
                 mHandler.removeMessages(MSG_DELAYED);
                 mHandler = null;
             }
-
-            android.os.Process.killProcess(android.os.Process.myPid());
-            System.exit(0);
+            finish();
         } else if (isPreferences.getSp().getString("wlact_from", "").equals("settings")) {// Login
             startActivity(intent);
         }

@@ -3,86 +3,178 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.innouni.magpie.main.mainActivity">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context="com.innouni.magpie.main.ui.activity.mainActivity">
 
 
 
-    <FrameLayout   android:id="@+id/content"
+    <FrameLayout
+        android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/iv_line"  >
+        android:layout_above="@+id/rl_bottom"
+        >
     </FrameLayout>
 
 
 
 
-    <ImageView
-        android:id="@+id/iv_line"
-        android:layout_above="@+id/ll_bottom"
-        android:layout_width="match_parent"
-        android:layout_height="0.03dp"
-        android:background="@color/cr_black"/>
 
-    <LinearLayout
-        android:id="@+id/ll_bottom"
+    <RelativeLayout
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp">
-        <TextView
-            android:id="@+id/tv_home"
-            android:layout_weight="1.0"
-            android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:id="@+id/rl_bottom"
+        >
+
+        <LinearLayout
+            android:layout_alignParentBottom="true"
+            android:background="@color/cr_green_1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="首页"
-            android:gravity="center"
-            android:textSize="12sp"
-            android:textColor="@color/cr_black"
-            android:drawablePadding="4dp"
-            android:drawableTop="@mipmap/ic_launcher"
-            />
+            android:orientation="horizontal">
+            <TextView
+                android:paddingTop="8dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:paddingBottom="4dp"
+                android:visibility="invisible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tv_chat"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:textColor="@color/cr_white"
+                android:drawablePadding="2dp"
+                android:drawableTop="@mipmap/icon_bottom_home"/>
 
-        <TextView
-            android:id="@+id/tv_find"
-            android:layout_weight="1.0"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="发现"
-            android:gravity="center"
-            android:textSize="12sp"
-            android:textColor="@color/cr_black"
-            android:drawablePadding="4dp"
-            android:drawableTop="@mipmap/ic_launcher"/>
+        </LinearLayout>
 
 
-        <TextView
-            android:id="@+id/tv_chat"
-            android:layout_weight="1.0"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="客服"
-            android:gravity="center"
-            android:textSize="12sp"
-            android:textColor="@color/cr_black"
-            android:drawablePadding="4dp"
-            android:drawableTop="@mipmap/ic_launcher"/>
+        <LinearLayout
+
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
 
-        <TextView
-            android:id="@+id/tv_personal"
-            android:layout_weight="1.0"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="我的"
-            android:gravity="center"
-            android:textSize="12sp"
-            android:textColor="@color/cr_black"
-            android:drawablePadding="4dp"
-            android:drawableTop="@mipmap/ic_launcher"/>
+            <RelativeLayout
+                android:gravity="center"
+
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0">
+
+                <ImageView
+                    android:id="@+id/iv_home_bg"
+                    android:layout_centerInParent="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="70dp"
+                    android:src="@mipmap/icon_bottom_select_bg"/>
 
 
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/tv_home"
+                    android:layout_centerHorizontal="true"
+                   android:layout_alignParentBottom="true"
+                    android:gravity="center_horizontal"
+                   android:layout_gravity="bottom"
+                    android:paddingBottom="4dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv_home"
+                    android:textSize="12sp"
+                    android:textColor="@color/cr_white"
+                    android:drawablePadding="2dp"
+                    android:drawableTop="@mipmap/icon_bottom_home"/>
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0">
+
+                <RelativeLayout
+                    android:gravity="center"
+
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0">
+
+                    <ImageView
+                        android:visibility="invisible"
+                        android:id="@+id/iv_chat_bg"
+                        android:layout_centerInParent="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="70dp"
+                        android:src="@mipmap/icon_bottom_select_bg"/>
+
+
+                    <TextView
+                        android:id="@+id/tv_chat"
+                        android:layout_centerHorizontal="true"
+                        android:layout_alignParentBottom="true"
+                        android:gravity="center_horizontal"
+                        android:layout_gravity="bottom"
+                        android:paddingBottom="4dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tv_chat"
+                        android:textSize="12sp"
+                        android:textColor="@color/cr_white"
+                        android:drawablePadding="2dp"
+                        android:drawableTop="@mipmap/icon_bottom_chat"/>
+                </RelativeLayout>
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0">
+
+                <RelativeLayout
+                    android:gravity="center"
+
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0">
+
+                    <ImageView
+                        android:visibility="invisible"
+                        android:id="@+id/iv_personal_bg"
+                        android:layout_centerInParent="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="70dp"
+                        android:src="@mipmap/icon_bottom_select_bg"/>
+
+
+                    <TextView
+                        android:id="@+id/tv_personal"
+                        android:layout_centerHorizontal="true"
+                        android:layout_alignParentBottom="true"
+                        android:gravity="center_horizontal"
+                        android:layout_gravity="bottom"
+                        android:paddingBottom="4dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tv_personal"
+                        android:textSize="12sp"
+                        android:textColor="@color/cr_white"
+                        android:drawablePadding="2dp"
+                        android:drawableTop="@mipmap/icon_bottom_personal"/>
+                </RelativeLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
 </RelativeLayout>
