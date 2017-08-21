@@ -123,7 +123,7 @@
                         android:text="选择住宿时间"
                         android:textColor="@color/cr_green_3"
                         android:textSize="16sp"
-                        android:drawableLeft="@mipmap/icon_home_address"
+                        android:drawableLeft="@mipmap/icon_date"
                         android:drawablePadding="16dp"
 
                         />
@@ -158,6 +158,28 @@
                     android:drawableLeft="@mipmap/icon_home_zhuzi_bg"
                     android:drawablePadding="8dp"
                     />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="160dp"
+                        android:orientation="vertical">
+
+                    </LinearLayout>
+
+
+                <!--优质房源-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:text="优质房源"
+                    android:textSize="18sp"
+                    android:textColor="@color/cr_black_2"
+                    android:layout_marginBottom="20dp"
+                    android:drawableLeft="@mipmap/icon_home_zhuzi_bg"
+                    android:drawablePadding="8dp"
+                    />
+
+
 
 
             </LinearLayout>

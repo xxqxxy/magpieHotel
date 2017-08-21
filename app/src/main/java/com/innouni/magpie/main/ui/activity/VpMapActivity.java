@@ -1,32 +1,23 @@
-package com.innouni.magpie.main.fragment;
+package com.innouni.magpie.main.ui.activity;
 
-import android.app.Fragment;
+import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 
 import com.bumptech.glide.Glide;
 import com.comutils.main.ReAsyncTask;
 import com.comutils.main.utils.APIUtil;
 import com.comutils.main.utils.SharePreferences;
-import com.comutils.pulltorefresh.PullToRefreshBase;
-import com.comutils.pulltorefresh.PullToRefreshScrollView;
 import com.innouni.magpie.main.R;
 import com.innouni.magpie.main.adapter.VpMapAdapter2;
-import com.innouni.magpie.main.ui.activity.VpMapActivity;
 import com.innouni.magpie.main.utils.comFunction;
-import com.innouni.magpie.main.widget.TranslucentActionBar;
-import com.innouni.magpie.main.widget.TranslucentScrollView;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -41,114 +32,33 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 首页
- * Created by Administrator on 2017/7/20.
+ * Created by Administrator on 2017/8/21.
  */
 
-public class homeFragment extends Fragment {
-    View mView,mContentView,zoomView;
+public class VpMapActivity extends Activity {
+
     ViewPager vp_map;
-    PullToRefreshScrollView ps_home;
-    ScrollView m_sv;
-    LayoutInflater mflater;
-    private TranslucentScrollView translucentScrollView;
-    private TranslucentActionBar actionBar;
     private List<ImageView> arrayViews = null;
     private ScheduledExecutorService scheduledExecutorService;
     private int currentItem = 0;
     SharePreferences isPreferences;
     ReAsyncTask isytopImagesTask;
     VpMapAdapter2 mVpMapAdapter = null;
-    Context mContext = null;
-
-    @Nullable
+    Context mContext;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_home, container, false) ;
-        return mView;
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        mContext = getActivity();
-        isPreferences = new SharePreferences(mContext);
-        initThreads();
-        initScrollViews(mView);
-    }
-
-    private void initThreads() {
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.vp_map);
+    mContext = this;
+        isPreferences = new SharePreferences(this);
         isytopImagesTask = new ReAsyncTask();
-
-    }
-
-    private void initScrollViews(View mView) {
-        ps_home = (PullToRefreshScrollView) mView.findViewById(R.id.ps_home);
-        // 设置下拉刷新可用
-        ps_home.setPullRefreshEnabled(true);
-        // 上拉加载不可用
-        ps_home.setPullLoadEnabled(false);
-        // 滚动到底自动加载可用
-        ps_home.setScrollLoadEnabled(false);
-        ps_home.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ScrollView>() {
-            @Override
-            public void onPullDownToRefresh(PullToRefreshBase<ScrollView> refreshView) {
-
-            }
-
-            @Override
-            public void onPullUpToRefresh(PullToRefreshBase<ScrollView> refreshView) {
-
-            }
-        });
-
-
-        m_sv = ps_home.getRefreshableView();
-        mflater = LayoutInflater.from(mContext);
-        mContentView = mflater.inflate(R.layout.home_sub, null);
-        m_sv.addView(mContentView);
-        initContentViews();
-
-        //获取数据
-//        ps_home.doPullRefreshing(true,1000);
-
+        initViewPager();
         getSytopImages();
 
     }
 
-    private void initContentViews() {
-        actionBar = (TranslucentActionBar) mContentView.findViewById(R.id.actionbar);
-        //初始actionBar
-        actionBar.setData(getString(R.string.tv_home), 0, null, 0, null, null);
-        //开启渐变
-        actionBar.setNeedTranslucent();
-        //设置状态栏高度
-        actionBar.setStatusBarHeight(comFunction.getStatusBarHeight(mContext));
-
-        translucentScrollView = (TranslucentScrollView) mContentView.findViewById(R.id.pullzoom_scrollview);
-        //设置透明度变化监听
-        translucentScrollView.setTranslucentChangedListener(new TranslucentScrollView.TranslucentChangedListener() {
-            @Override
-            public void onTranslucentChanged(int transAlpha) {
-                Log.i("","[TranslucentChangedListener] "+transAlpha);
-                actionBar.tvTitle.setVisibility(transAlpha > 15 ? View.VISIBLE : View.GONE);
-            }
-        });
-        //关联需要渐变的视图
-        translucentScrollView.setTransView(actionBar);
-
-        zoomView = mContentView.findViewById(R.id.lay_header);
-        //关联伸缩的视图
-        translucentScrollView.setPullZoomView(zoomView);
-
-        initViewPager();
-
-
-    }
-
     private void initViewPager() {
-        vp_map = (ViewPager) mView.findViewById(R.id.vp_map);
+        vp_map = (ViewPager) findViewById(R.id.vp_map);
         arrayViews = new ArrayList<>();
         scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
         scheduledExecutorService.scheduleAtFixedRate(new ScrollTask(), 1, 3, TimeUnit.SECONDS);
@@ -159,8 +69,7 @@ public class homeFragment extends Fragment {
     }
     private class ScrollTask implements Runnable {
         public void run() {
-
-            Log.i("","tag ScrollTask = ");
+            Log.i("","tag ScrollTask ");
 
             synchronized (vp_map) {
                 Log.i("","tag ScrollTask = "+currentItem);
@@ -175,6 +84,7 @@ public class homeFragment extends Fragment {
             vp_map.setCurrentItem(currentItem);
         };
     };
+
 
     /**顶部轮播图***/
     private void getSytopImages(){
@@ -212,18 +122,54 @@ public class homeFragment extends Fragment {
                                 imageView = new ImageView(mContext);
                                 Log.i("", "tag sytopImages map =  "+map);
 
-                                Glide.with(mContext).load(map).placeholder(R.mipmap.icon_home_top_lunbo).into(imageView);
+                                Glide.with(mContext).load(map).placeholder(R.mipmap.ic_launcher).into(imageView);
 
                                 imageView.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                       startActivity(new Intent(mContext, VpMapActivity.class));
+                                        comFunction.toastMsg(mContext, "点击了轮播图图片");
                                     }
                                 });
                                 arrayViews.add(imageView);
                             }
                             mVpMapAdapter = new VpMapAdapter2(mContext, arrayViews);
                             vp_map.setAdapter(mVpMapAdapter);
+                            vp_map.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                                @Override
+                                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                                }
+
+                                @Override
+                                public void onPageSelected(int position) {
+                                    Log.i("","tag OnPageChangeListener = onPageSelected"+position);
+                                    currentItem = position;
+                                }
+
+                                @Override
+                                public void onPageScrollStateChanged(int state) {
+
+                                }
+                            });
+
+                          /*   vp_map.setOnPageChangeListener(new  android.support.v4.view.ViewPager.OnPageChangeListener() {
+                               @Override
+                                public void onPageScrollStateChanged(int arg0) {
+                                    Log.i("","tag OnPageChangeListener = onPageScrollStateChanged");
+                                }
+
+                                @Override
+                                public void onPageScrolled(int arg0, float arg1, int arg2) {
+                                    Log.i("","tag OnPageChangeListener = onPageScrolled");
+                                }
+
+                                @Override
+                                public void onPageSelected(int position) {
+                                    Log.i("","tag OnPageChangeListener = onPageSelected"+position);
+                                    currentItem = position;
+                                }
+                            });*/
+
 
                         }else{
                             msg = jsonj.getString("msg");
@@ -234,11 +180,13 @@ public class homeFragment extends Fragment {
                             msg = null;
                         }
 
+
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
-               isytopImagesTask.setRun(false);
+                isytopImagesTask.setRun(false);
 
             }
         };
@@ -250,15 +198,6 @@ public class homeFragment extends Fragment {
         paramList.add(new BasicNameValuePair(APIUtil.APP_KEY_STR , APIUtil.APP_KEY));
         isytopImagesTask.loadData(APIUtil.API_URL+"sytopImages",paramList , iFinishCallback );
     }
-
-
-
-    TranslucentScrollView.TranslucentChangedListener mTransListener = new TranslucentScrollView.TranslucentChangedListener() {
-        @Override
-        public void onTranslucentChanged(int transAlpha) {
-
-        }
-    };
 
 
 }

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_launcher"
+        android:id="@+id/iv_sytop"/>
+
+    <LinearLayout
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <TextView
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="最美杭州\t\t\t人间天堂"
+            android:textSize="26sp"
+            android:textColor="@color/cr_white"
+            android:id="@+id/tv_vp_title"
+            />
+        <TextView
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="著名的景点就是西湖西溪湿地也很舒服杭州的生活节奏不快租借一辆自行车在市区骑也很不错"
+            android:textSize="16sp"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/tv_vp_content"
+
+            />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

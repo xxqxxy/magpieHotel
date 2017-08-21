@@ -3,5 +3,6 @@
     <string name="tv_home" >首页</string>
     <string name="tv_chat" >客服</string>
     <string name="tv_personal" >我的</string>
-
+    <string name="tv_net_not_visable">当前网络不可用！</string>
+    <string name="tv_unknown_err">接口返回异常</string>
 </resources>
