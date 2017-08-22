@@ -3,6 +3,7 @@ package com.innouni.magpie.main.fragment;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -13,15 +14,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.comutils.main.MyListView;
 import com.comutils.main.ReAsyncTask;
 import com.comutils.main.utils.APIUtil;
 import com.comutils.main.utils.SharePreferences;
 import com.comutils.pulltorefresh.PullToRefreshBase;
 import com.comutils.pulltorefresh.PullToRefreshScrollView;
 import com.innouni.magpie.main.R;
+import com.innouni.magpie.main.adapter.HouseAdapter;
 import com.innouni.magpie.main.adapter.VpMapAdapter2;
 import com.innouni.magpie.main.ui.activity.VpMapActivity;
 import com.innouni.magpie.main.utils.comFunction;
@@ -35,6 +40,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -54,13 +60,19 @@ public class homeFragment extends Fragment {
     private TranslucentScrollView translucentScrollView;
     private TranslucentActionBar actionBar;
     private List<ImageView> arrayViews = null;
+    TextView tv_destination,tv_my_near,tv_time,tv_search;//目的地、我的附近、住宿时间、搜索
+    ProgressBar pb_bar;//定位时进度条
+    ImageView iv_house_more;//房源更多
+    MyListView lv_house;//房源列表
+
     private ScheduledExecutorService scheduledExecutorService;
     private int currentItem = 0;
     SharePreferences isPreferences;
-    ReAsyncTask isytopImagesTask;
+    ReAsyncTask isytopImagesTask ,iSyatjHousesTask;
     VpMapAdapter2 mVpMapAdapter = null;
+    HouseAdapter mHouseAdapter = null;
     Context mContext = null;
-
+    List<HashMap<String, Object>> mList = null;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -80,6 +92,7 @@ public class homeFragment extends Fragment {
 
     private void initThreads() {
         isytopImagesTask = new ReAsyncTask();
+        iSyatjHousesTask = new ReAsyncTask();
 
     }
 
@@ -108,47 +121,71 @@ public class homeFragment extends Fragment {
         mflater = LayoutInflater.from(mContext);
         mContentView = mflater.inflate(R.layout.home_sub, null);
         m_sv.addView(mContentView);
-        initContentViews();
+
+        initScrollViewContentViews();
+        initViewPager();
+//        initContentViews();
 
         //获取数据
 //        ps_home.doPullRefreshing(true,1000);
 
         getSytopImages();
+        getSyatjHouses();
 
-    }
-
-    private void initContentViews() {
-        actionBar = (TranslucentActionBar) mContentView.findViewById(R.id.actionbar);
-        //初始actionBar
-        actionBar.setData(getString(R.string.tv_home), 0, null, 0, null, null);
-        //开启渐变
-        actionBar.setNeedTranslucent();
-        //设置状态栏高度
-        actionBar.setStatusBarHeight(comFunction.getStatusBarHeight(mContext));
-
-        translucentScrollView = (TranslucentScrollView) mContentView.findViewById(R.id.pullzoom_scrollview);
-        //设置透明度变化监听
-        translucentScrollView.setTranslucentChangedListener(new TranslucentScrollView.TranslucentChangedListener() {
-            @Override
-            public void onTranslucentChanged(int transAlpha) {
-                Log.i("","[TranslucentChangedListener] "+transAlpha);
-                actionBar.tvTitle.setVisibility(transAlpha > 15 ? View.VISIBLE : View.GONE);
-            }
-        });
-        //关联需要渐变的视图
-        translucentScrollView.setTransView(actionBar);
-
-        zoomView = mContentView.findViewById(R.id.lay_header);
-        //关联伸缩的视图
-        translucentScrollView.setPullZoomView(zoomView);
-
-        initViewPager();
 
 
     }
+//
+//    private void initContentViews() {
+//        actionBar = (TranslucentActionBar) mContentView.findViewById(R.id.actionbar);
+//        //初始actionBar
+//        actionBar.setData(getString(R.string.tv_home), 0, null, 0, null, null);
+//        //开启渐变
+//        actionBar.setNeedTranslucent();
+//        //设置状态栏高度
+//        actionBar.setStatusBarHeight(comFunction.getStatusBarHeight(mContext));
+//
+//        translucentScrollView = (TranslucentScrollView) mContentView.findViewById(R.id.pullzoom_scrollview);
+//        //设置透明度变化监听
+//        translucentScrollView.setTranslucentChangedListener(new TranslucentScrollView.TranslucentChangedListener() {
+//            @Override
+//            public void onTranslucentChanged(int transAlpha) {
+//                Log.i("","[TranslucentChangedListener] "+transAlpha);
+//                actionBar.tvTitle.setVisibility(transAlpha > 15 ? View.VISIBLE : View.GONE);
+//            }
+//        });
+//        //关联需要渐变的视图
+//        translucentScrollView.setTransView(actionBar);
+//
+//        zoomView = mContentView.findViewById(R.id.lay_header);
+//        //关联伸缩的视图
+//        translucentScrollView.setPullZoomView(zoomView);
+//    }
+
+
+    private void initScrollViewContentViews(){
+        tv_destination = (TextView) mContentView.findViewById(R.id.tv_destination);
+        tv_my_near = (TextView) mContentView.findViewById(R.id.tv_my_near);
+        tv_search = (TextView) mContentView.findViewById(R.id.tv_search);
+        tv_time = (TextView) mContentView.findViewById(R.id.tv_time);
+
+        pb_bar = (ProgressBar) mContentView.findViewById(R.id.pb_bar);
+
+        lv_house = (MyListView) mContentView.findViewById(R.id.lv_house);
+        lv_house.setDividerHeight(0);
+        lv_house.setDivider(new ColorDrawable(getResources().getColor(R.color.cr_gray_1)));
+        lv_house.setDividerHeight((int) (getResources().getDisplayMetrics().density * 5));
+        lv_house.setDivider(new ColorDrawable(getResources().getColor(R.color.cr_gray_3)));
+
+        mList = new ArrayList<>();
+        mHouseAdapter = new HouseAdapter(mContext ,mList, mOnClickListener );
+        lv_house.setAdapter(mHouseAdapter);
+
+    }
+
 
     private void initViewPager() {
-        vp_map = (ViewPager) mView.findViewById(R.id.vp_map);
+        vp_map = (ViewPager) mContentView.findViewById(R.id.vp_map);
         arrayViews = new ArrayList<>();
         scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
         scheduledExecutorService.scheduleAtFixedRate(new ScrollTask(), 1, 3, TimeUnit.SECONDS);
@@ -252,6 +289,95 @@ public class homeFragment extends Fragment {
     }
 
 
+    /***优质房源***/
+    private void getSyatjHouses(){
+        if(comFunction.isWiFi_3G(mContext)){
+            if(!iSyatjHousesTask.isRun()){
+                getiSyatjHouses();
+            }
+        }else{
+            comFunction.toastMsg(mContext, getString(R.string.tv_net_not_visable));
+        }
+    }
+
+    private void getiSyatjHouses(){
+
+        ReAsyncTask.FinishCallback iFinishCallback = new ReAsyncTask.FinishCallback() {
+            @Override
+            public void taskFinish(int code, String result) {
+                Log.i("", "tag syayzHouses  = " + result);
+                JSONObject jsonj = null;
+                JSONArray jarray = null;
+                String msg = null;
+                if (result == null) {
+                    comFunction.toastMsg(mContext, getString(R.string.tv_unknown_err));
+                }else{
+                    try {
+                        jsonj = new JSONObject(result);
+                        if(code == 200){
+                            jarray = jsonj.getJSONArray("data");
+                            int len = jarray.length();
+                            for (int i = 0;i<len;i++){
+                                HashMap<String , Object> hMap = new HashMap<>();
+                                hMap.put("hs_id", jarray.getJSONObject(i).getString("hs_id").toString().replace("null" ,""));//房源id
+                                hMap.put("hs_title", jarray.getJSONObject(i).getString("hs_title").toString().replace("null" ,""));//房源标题
+                                hMap.put("price", jarray.getJSONObject(i).getString("price").toString().replace("null" ,"0"));//价格
+                                hMap.put("hs_fist_img", jarray.getJSONObject(i).getString("hs_fist_img").toString().replace("null" ,""));//展示图
+                                hMap.put("hs_address", jarray.getJSONObject(i).getString("hs_address").toString().replace("null" ,""));//大致地址
+                                hMap.put("comments", jarray.getJSONObject(i).getString("comments").toString().replace("null" ,""));//评论数量
+                                hMap.put("hs_total_score", jarray.getJSONObject(i).getString("hs_total_score").toString().replace("null" ,""));//评分
+                                hMap.put("c_state", jarray.getJSONObject(i).getString("c_state").toString().replace("null" ,"2"));//收藏状态
+                                mList.add(hMap);
+                            }
+
+                        }else{
+                            msg = jsonj.getString("msg");
+                        }
+
+                        if(msg == null){
+                            mHouseAdapter.notifyDataSetChanged();
+                        }else{
+                            comFunction.toastMsg(mContext, msg);
+                            msg = null;
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                iSyatjHousesTask.setRun(false);
+            }
+        };
+
+        List<NameValuePair> paramList = new ArrayList<NameValuePair>();
+        paramList.add(new BasicNameValuePair(APIUtil.APP_KEY_STR , APIUtil.APP_KEY));
+        iSyatjHousesTask.loadData(APIUtil.API_URL+"syayzHouses",paramList , iFinishCallback );
+
+    }
+
+
+
+    //优质房源Item点击事件
+    View.OnClickListener mOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+//            String  position = (String) view.getTag();
+            switch (view.getId()){
+                case R.id.ll_house:
+
+                    break;
+
+                case R.id.iv_c_state:
+
+                    break;
+
+                default:
+                    break;
+            }
+
+        }
+    };
 
     TranslucentScrollView.TranslucentChangedListener mTransListener = new TranslucentScrollView.TranslucentChangedListener() {
         @Override

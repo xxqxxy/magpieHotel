@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/ll_house">
+
+    <RelativeLayout
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_home_top_lunbo"
+            android:adjustViewBounds="true"
+            android:id="@+id/iv_hmap"
+            />
+
+        <TextView
+
+            android:layout_below="@+id/iv_hmap"
+            android:layout_marginTop="-44dp"
+            android:layout_marginLeft="6dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="￥258"
+            android:textSize="18sp"
+            android:background="@drawable/ic_shape_white_bg"
+            android:textColor="@color/cr_green_6"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:id="@+id/tv_price"
+            />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginBottom="22dp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="西湖音乐喷泉附近"
+            android:textSize="18sp"
+            android:textColor="@color/cr_black_1"
+            android:id="@+id/tv_title"
+            />
+
+        <TextView
+            android:layout_below="@+id/tv_title"
+            android:layout_marginTop="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="龙翔桥银泰城"
+            android:textSize="16sp"
+            android:textColor="@color/cr_gray_2"
+            android:id="@+id/tv_address"
+            android:drawableLeft="@mipmap/icon_house_addess"
+            android:drawablePadding="2dp"
+            />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_house_collection_normal"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:id="@+id/iv_c_state"
+            />
+
+    </RelativeLayout>
+
+
+
+
+</LinearLayout>

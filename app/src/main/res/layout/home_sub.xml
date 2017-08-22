@@ -2,11 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <com.innouni.magpie.main.widget.TranslucentScrollView
+   <!-- <com.innouni.magpie.main.widget.TranslucentScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/pullzoom_scrollview"
-        android:scrollbars="none">
+        android:scrollbars="none">-->
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -132,6 +133,7 @@
 
             <!--开始搜索-->
                 <TextView
+                    android:id="@+id/tv_search"
                     android:layout_gravity="center_horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -158,27 +160,57 @@
                     android:drawableLeft="@mipmap/icon_home_zhuzi_bg"
                     android:drawablePadding="8dp"
                     />
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="160dp"
-                        android:orientation="vertical">
 
-                    </LinearLayout>
+
+            `   <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/rv_act"
+                android:scrollbars="none">
+            </android.support.v7.widget.RecyclerView>
+
+
+
 
 
                 <!--优质房源-->
-                <TextView
-                    android:layout_width="wrap_content"
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
-                    android:text="优质房源"
-                    android:textSize="18sp"
-                    android:textColor="@color/cr_black_2"
                     android:layout_marginBottom="20dp"
-                    android:drawableLeft="@mipmap/icon_home_zhuzi_bg"
-                    android:drawablePadding="8dp"
-                    />
+                    android:layout_marginRight="12dp"
+                    android:layout_marginTop="27dp"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="优质房源"
+                        android:textSize="18sp"
+                        android:textColor="@color/cr_black_2"
+                        android:drawableLeft="@mipmap/icon_home_zhuzi_bg"
+                        android:drawablePadding="8dp"
 
+                        />
+                    <ImageView
+                        android:id="@+id/iv_house_more"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/icon_gray_right"
+                        android:layout_alignParentRight="true"/>
+
+
+                </RelativeLayout>
+
+
+                <com.comutils.main.MyListView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none"
+                    android:id="@+id/lv_house"
+                    android:listSelector="@android:color/transparent"
+                    />
 
 
 
@@ -188,13 +220,13 @@
         </LinearLayout>
 
 
-
+<!--
     </com.innouni.magpie.main.widget.TranslucentScrollView>
 
     <com.innouni.magpie.main.widget.TranslucentActionBar
         android:id="@+id/actionbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        ></com.innouni.magpie.main.widget.TranslucentActionBar>
+        ></com.innouni.magpie.main.widget.TranslucentActionBar>-->
 
 </RelativeLayout>
